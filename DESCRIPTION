@@ -1,15 +1,11 @@
 Package: lmG1
 Type: Package
-Title: Linear Regression Functions
+Title: What the Package Does (Title Case)
 Version: 0.1.0
-Authors@R: c(
-    person("Cunhao", "Li", email = "czl0111@auburn.edu", role = "aut"),
-    person("Ruoyun", "Mei", email = "rzm0074@auburn.edu", role = "aut"),
-    person("Stanley", "Wijiya",email = "szw0111@auburn.edu" role = "aut")
-    )
+Author: Who wrote it
 Maintainer: The package maintainer <yourself@somewhere.net>
-Description: The package contains the basic functions of linear regression, including
-            the estimated coefficient vector beta, confidence intervals, and plots.
-License: GNU
+Description: More about what it does (maybe more than one line)
+    Use four spaces when indenting paragraphs within the Description.
+License: What license is it under?
 Encoding: UTF-8
 LazyData: true
