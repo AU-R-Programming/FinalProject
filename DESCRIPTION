@@ -10,9 +10,10 @@ Authors@R: c(
 Maintainer: Stanley Wijaya <szw0111@auburn.edu>
             Ruoyun Mei <rzm0074@auburn.edu>
             Cunhao Li <czl0111@auburn.edu>
-Description: This package contains the basic functions to perform linear regression. It allows users to choose the significance level α to obtain for the 1−α confidence intervals for β, and estimated coefficient vector β hat. 
-             Besides, users can evaluate the linear model using R^2 and Mallow's Cp. F-test and p-value are also aviliabvle. 
-             Plots including residuals vs fitted-values, qq-plot, and histogram of residuals.
+Description: This package contains the basic functions to perform linear regression. 
+             It allows users to choose the significance level α to obtain for the 1−α confidence intervals for β, and estimated coefficient vector β hat. 
+             Besides, users can evaluate the linear model using R^2 and Mallow's Cp. F-test and p-value are also availabvle. 
+             Plots include residuals vs fitted-values, qq-plot, and histogram of residuals.
 License: GNU
 Encoding: UTF-8
 LazyData: true
