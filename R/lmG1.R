@@ -1,4 +1,65 @@
+#' @title Linear Regression with Optimized Beta - Final Project Group 1
+#'
+#' @description This function performs linear regression on user-defined
+#' predictor variable X, response variable y and significance level alpha where
+#' the parameter vector beta is estimated using optimization. Additionally, the
+#' function provides statistics related to the linear regression model, including:
+#'
+#' 1) Estimated coefficient vector beta found via optimization
+#'
+#' 2) Confidence interval for beta corresponding to the significance level provided by the user
+#'
+#' 3) Plots with ggplot2 including: a) Residuals vs. fitted values; b) qq-plot of residuals; c) Histogram of residuals
+#'
+#' 4) Model evaluation metric values including: a) R^2 (coefficient of determination); b) Cp (Mallow's Cp)
+#'
+#' 5) F-test statistic and p-value
+#'
+#' @param y A \code{vector} of length n representing the response variable that is to be predicted
+#' @param X A \code{matrix} of dimension n x p representing the predictor variables that is used to estimate @param y
+#' @param alpha A \code{numeric} value, the significance level used for calculating confidence interval. The default value is 0.05
+#' @param plot A \code{boolean} value representing whether the plots should be printed when running the linear regression function
+#' @return A \code{list} containing the following attributes:
+#' \describe{
+#'      \item{beta}{The coefficient vector beta found via optimization}
+#'      \item{y_pred}{The predicted values for the response variable y}
+#'      \item{sigma2}{The estimation of the residual variance}
+#'      \item{variance_beta}{The estimation of the variance of beta}
+#'      \item{confint}{The confidence interval of beta corresponding to the significance level}
+#'      \item{r_sqrd}{The coefficient of determination which indicates how much variation of y is explained by X}
+#'      \item{mallow_cp}{Mallow's Cp which assesses the fit of the model}
+#'      \item{f_stat}{The F-test statistics}
+#'      \item{pf_value}{The p-value for the F-test, specifically P(F > F*)}
+#' }
+#' @author Stanley Thomas Wijaya, Ruoyun Mei, Cunhao Li
+#' @import ggplot2
+#' @import patchwork
+#' @export
+#' @examples
+#' library(lmG1)
+#' set.seed(1)
+#' crop_data <- read.csv("crop.data.csv", header = TRUE)
+#' crop_data <- na.omit(crop_data)
+#' density <- as.factor(crop_data$density)
+#' block <- as.factor(crop_data$block)
+#' fertilizer <- as.factor(crop_data$fertilizer)
+#' X <- cbind(density, block, fertilizer)
+#' y <- crop_data$yield
+#' result <- lmG1(y, X, alpha = 0.05, plot = TRUE)
+#'
+#' result$beta
+#' result$y_pred
+#' result$sigma2
+#' result$variance_beta
+#' result$confint
+#' result$r_sqrd
+#' result$mallow_cp
+#' result$f_stat
+#' result$pf_value
 lmG1 <- function(y, X, alpha = 0.05, plot = FALSE) {
+
+  library(ggplot2)
+  library(patchwork)
 
   # make sure the response variable is a vector
   # and predictor variable is a matrix
@@ -66,21 +127,18 @@ lmG1 <- function(y, X, alpha = 0.05, plot = FALSE) {
   f_test_p_val <- pf(F_stat, DFM, DFE, lower.tail = FALSE)
 
   if (plot == TRUE) {
-    library(ggplot2)
-    library(patchwork)
-
     # residual vs fitted-values plot
-    res_fit <- ggplot(data = Boston, aes(x = y_hat, y = residual)) +
+    res_fit <- ggplot(mapping = aes(x = y_hat, y = residual)) +
       labs(title = 'Residuals vs Fitted', x = 'Fitted values', y = 'Residuals') +
       geom_point() + geom_smooth()
 
     # qq-plot of residuals
-    qq <- ggplot(Boston, aes(sample = residual)) +
+    qq <- ggplot(mapping = aes(sample = residual)) +
       labs(title = 'Residual QQ-plot', x = 'Theoretical Quantiles', y = 'Sample Quantiles') +
       stat_qq()
 
     # histogram (or density) of residuals
-    hist <- ggplot(data = Boston, aes(x = residual)) +
+    hist <- ggplot(mapping = aes(x = residual)) +
       geom_histogram(fill = 'steelblue', color = 'black') +
       labs(title = 'Histogram of Residuals', x = 'Residuals', y = 'Frequency')
 
@@ -93,22 +151,3 @@ lmG1 <- function(y, X, alpha = 0.05, plot = FALSE) {
               mallow_cp = Cp, f_stat = F_stat, pf_value = f_test_p_val))
 
 }
-
-
-
-# testing function with Boston dataset
-# plot determines whether the residual vs fitted, qq-plot of residuals
-# and histogram of residuals graphs are shown or not
-library(MASS)
-lmG1_results <- lmG1(Boston$medv, Boston[-ncol(Boston)], plot = TRUE)
-
-# printing each of the results
-lmG1_results$beta
-lmG1_results$y_pred
-lmG1_results$sigma2
-lmG1_results$variance_beta
-lmG1_results$confint
-lmG1_results$r_sqrd
-lmG1_results$mallow_cp
-lmG1_results$f_stat
-lmG1_results$pf_value
