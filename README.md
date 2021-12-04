@@ -4,21 +4,27 @@
 [Package Repository:
 FinalProject](https://github.com/AU-R-Programming/FinalProject)
 
-The package is called “lmG1” under the “AU-R-Programming/FinalProject”
-repository. The package is designed to perform linear regression where
-the parameter vector beta is estimated using optimization. The package
-can be download by using
+The package we implemented is called “lmG1” under the
+“AU-R-Programming/FinalProject” repository. The package is designed to
+perform linear regression where the parameter vector *β* is estimated
+using optimization. The package can be download by using
 “devtools::install\_github(”AU-R-Programming/FinalProject“)”function.
 Learn more about the lmG1 function in the vignette below.
 
 To start off, there are two variables that need to be initialized by the
 user:
 
-    `x`: predictor variables, which is represented by a matrix of dimension n × p.
+    `X`: predictor variables, which is represented by a matrix of dimension n × p.
 
     `y`: response variable of interest, a vector that we want to predict.
 
-We are using the `crop.data.csv` as our example data set.
+The example provided below uses `crop.data.csv` as the data set.
+
+We first downloaded the `lmG1` package from GitHub and read in
+`crop.data.csv`. Then, we subset the data into predictor variables `X`
+and response variable `y`, while also removing rows with NA values. In
+this specific data set, we further edit the predictor variables to be
+factors.
 
 ``` r
 library(devtools)
@@ -36,11 +42,19 @@ X <- cbind(density, block, fertilizer)
 y <- crop_data$yield
 ```
 
+We use `X` and `y` to run the linear regression with default alpha of
+0.05 and changed `plot = TRUE` in order to produce the plots associated
+with the model.
+
 ``` r
 result <- lmG1(y, X, alpha = 0.05, plot = TRUE)
 ```
 
 ![](README_files/figure-gfm/linear_regression_plots-1.png)<!-- -->
+
+Below are all the linear regression results for this specific data set.
+Descriptions on the output results can be found in the documentation
+using `?lmG1` in R.
 
 ``` r
 result$beta
