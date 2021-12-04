@@ -2,11 +2,7 @@ Package: lmG1
 Type: Package
 Title: Linear Regression Functions
 Version: 0.1.0
-Authors@R: c(
-    person("Stanley", "Wijaya", email = "szw0111@auburn.edu", role = "aut)",
-    person("Ruoyun", "Mei", email = "rzm0074@auburn.edu", role = "aut"),
-    person("Cunhao", "Li", email = "czl0111@auburn.edu",role = "aut")
-   )
+Authors@R: c(person("Stanley", "Wijaya", email = "szw0111@auburn.edu", role = "aut)", person("Ruoyun", "Mei", email = "rzm0074@auburn.edu", role = "aut"), person("Cunhao", "Li", email = "czl0111@auburn.edu",role = "aut"))
 Maintainer: Stanley Wijaya <szw0111@auburn.edu>
             Ruoyun Mei <rzm0074@auburn.edu>
             Cunhao Li <czl0111@auburn.edu>
@@ -14,6 +10,7 @@ Description: This package contains the basic functions to perform linear regress
              It allows users to choose the significance level α to obtain for the 1−α confidence intervals for β, and estimated coefficient vector β hat. 
              Besides, users can evaluate the linear model using R^2 and Mallow's Cp. F-test and p-value are also availabvle. 
              Plots include residuals vs fitted-values, qq-plot, and histogram of residuals.
+Imports: ggplot2, patchwork
 License: GNU
 Encoding: UTF-8
 LazyData: true
