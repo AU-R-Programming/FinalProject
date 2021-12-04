@@ -5,29 +5,48 @@ output: github_document
 
 [Package Repository: FinalProject](https://github.com/AU-R-Programming/FinalProject)
 
-<<<<<<< HEAD
-The package is called "lmG1" under the "FinalProject" repository. The package is designed to perform linear regression. You can see lmG1 in action at https://github.com/AU-R-Programming/FinalProject, which has the latest version of lmG1.
-The package can be download by using "devtools::install_github("AU-R-Programming/lmG1")"function. 
+The package is called "lmG1" under the "AU-R-Programming/FinalProject" repository. 
+The package is designed to perform linear regression where the parameter vector
+beta is estimated using optimization. The package can be download by using
+"devtools::install_github("AU-R-Programming/FinalProject")"function. Learn more about 
+the lmG1 function in the vignette below.
 
-The package is called "lmG1" under the "FinalProject" repository. The package is designed to perform linear regression where the parameter vector $\beta$ is estimated using optimization. You can see lmG1 in action at https://github.com/AU-R-Programming/FinalProject. 
-Learn more in vignette("lmG1")
+To start off, there are two variables that need to be initialized by the user: 
 
-
-There are two variables need to be initialized: 
-
-    `x`: response variable, which is a vector of dimension n × p.
+    `x`: predictor variables, which is represented by a matrix of dimension n × p.
     
-    `y`: predictor variable of interest, a matrix that we want to predict.
+    `y`: response variable of interest, a vector that we want to predict.
 
-We are using the `crop.data.csv` as our example dataset. 
+We are using the `crop.data.csv` as our example data set. 
 
-```{r}
+```{r linear_regression_preprocess, warning = FALSE, message = FALSE}
+library(devtools)
 devtools::install_github("AU-R-Programming/FinalProject")
-library(lmG1)
-crop.data<- read.csv("crop.data.csv", header = TRUE)
 
-X<- cbind(as.factor(crop.data$density, crop.data$block, crop.data$fertilizer))
-y<- crop.data$yield
-result<- lmG1(y, X, alpha = 0.05, plot = TRUE)
-result
+library(lmG1)
+crop_data <- read.csv("crop.data.csv", header = TRUE)
+
+set.seed(1)
+crop_data <- na.omit(crop_data)
+density <- as.factor(crop_data$density)
+block <- as.factor(crop_data$block)
+fertilizer <- as.factor(crop_data$fertilizer)
+X <- cbind(density, block, fertilizer)
+y <- crop_data$yield
+```
+
+```{r linear_regression_plots, warning = FALSE, message = FALSE}
+result <- lmG1(y, X, alpha = 0.05, plot = TRUE)
+```
+
+```{r linear_regression_results, warning = FALSE, message = FALSE}
+result$beta
+result$y_pred
+result$sigma2
+result$variance_beta
+result$confint
+result$r_sqrd
+result$mallow_cp
+result$f_stat
+result$pf_value
 ```
