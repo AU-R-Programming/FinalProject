@@ -1,4 +1,4 @@
-lmG1 <- function(y, X, alpha = 0.05) {
+lmG1 <- function(y, X, alpha = 0.05, plot = FALSE) {
 
   # make sure the response variable is a vector
   # and predictor variable is a matrix
@@ -38,10 +38,6 @@ lmG1 <- function(y, X, alpha = 0.05) {
 
   # estimation of the variance of the estimated beta
   # note the solve function is to find the inverse of the matrix
-  print("SIGMA_2_HAT")
-  print(sigma2_hat)
-  print("SOLVE XTX")
-  print(solve(t(X)%*%X))
   var_beta <- as.numeric(sigma2_hat) * diag(solve(t(X)%*%X))
 
   # estimation of confidence interval based on alpha
@@ -69,6 +65,28 @@ lmG1 <- function(y, X, alpha = 0.05) {
   # compute the p-value for the f-test: P(F > F_stat)
   f_test_p_val <- pf(F_stat, DFM, DFE, lower.tail = FALSE)
 
+  if (plot == TRUE) {
+    library(ggplot2)
+    library(patchwork)
+
+    # residual vs fitted-values plot
+    res_fit <- ggplot(data = Boston, aes(x = y_hat, y = residual)) +
+      labs(title = 'Residuals vs Fitted', x = 'Fitted values', y = 'Residuals') +
+      geom_point() + geom_smooth()
+
+    # qq-plot of residuals
+    qq <- ggplot(Boston, aes(sample = residual)) +
+      labs(title = 'Residual QQ-plot', x = 'Theoretical Quantiles', y = 'Sample Quantiles') +
+      stat_qq()
+
+    # histogram (or density) of residuals
+    hist <- ggplot(data = Boston, aes(x = residual)) +
+      geom_histogram(fill = 'steelblue', color = 'black') +
+      labs(title = 'Histogram of Residuals', x = 'Residuals', y = 'Frequency')
+
+    print(res_fit + qq + hist)
+  }
+
   # return all estimated values
   return(list(beta = beta_hat, y_pred = y_hat, sigma2 = sigma2_hat,
               variance_beta = var_beta, confint = ci_beta, r_sqrd = R_squared,
@@ -76,6 +94,21 @@ lmG1 <- function(y, X, alpha = 0.05) {
 
 }
 
+
+
 # testing function with Boston dataset
+# plot determines whether the residual vs fitted, qq-plot of residuals
+# and histogram of residuals graphs are shown or not
 library(MASS)
-lmG1_results <- lmG1(Boston$medv, Boston[-ncol(Boston)])
+lmG1_results <- lmG1(Boston$medv, Boston[-ncol(Boston)], plot = TRUE)
+
+# printing each of the results
+lmG1_results$beta
+lmG1_results$y_pred
+lmG1_results$sigma2
+lmG1_results$variance_beta
+lmG1_results$confint
+lmG1_results$r_sqrd
+lmG1_results$mallow_cp
+lmG1_results$f_stat
+lmG1_results$pf_value
