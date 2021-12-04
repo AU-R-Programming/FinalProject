@@ -3,9 +3,31 @@ output: github_document
 ---
 # Final Project-Group 1
 
-[Package Repository: FinalProject] 
-(https://github.com/AU-R-Programming/FinalProject)
+[Package Repository: FinalProject](https://github.com/AU-R-Programming/FinalProject)
 
+<<<<<<< HEAD
+The package is called "lmG1" under the "FinalProject" repository. The package is designed to perform linear regression. You can see lmG1 in action at https://github.com/AU-R-Programming/FinalProject, which has the latest version of lmG1.
+The package can be download by using "devtools::install_github("AU-R-Programming/lmG1")"function. 
+=======
 The package is called "lmG1" under the "FinalProject" repository. The package is designed to perform linear regression where the parameter vector $\beta$ is estimated using optimization. You can see lmG1 in action at https://github.com/AU-R-Programming/FinalProject. 
 Learn more in vignette("lmG1")
+>>>>>>> 24ac4eb78c71b5062e8a15e85850797987fc97e2
 
+There are two variables need to be initialized: 
+
+    `x`: response variable, which is a vector of dimension n × p.
+    
+    `y`: predictor variable of interest, a matrix that we want to predict.
+
+We are using the `crop.data.csv` as our example dataset. 
+
+```{r}
+devtools::install_github("AU-R-Programming/FinalProject")
+library(lmG1)
+crop.data<- read.csv("crop.data.csv", header = TRUE)
+
+X<- cbind(as.factor(crop.data$density, crop.data$block, crop.data$fertilizer))
+y<- crop$yield
+result<- lmG1(y, X, alpha = 0.05, plot = TRUE)
+result
+```
