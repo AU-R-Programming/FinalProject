@@ -5,7 +5,7 @@ Version: 0.1.0
 Authors@R: c(
     person("Stanley", "Wijaya", email = "szw0111@auburn.edu", role = "aut)",
     person("Ruoyun", "Mei", email = "rzm0074@auburn.edu", role = "aut"),
-    person("Cunhao", "Li", email = "czl0111@auburn.edu",role = "aut"),
+    person("Cunhao", "Li", email = "czl0111@auburn.edu",role = "aut")
    )
 Maintainer: Stanley Wijaya <szw0111@auburn.edu>
             Ruoyun Mei <rzm0074@auburn.edu>
